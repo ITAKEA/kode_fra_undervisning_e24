@@ -1,0 +1,1 @@
+## Kodeeksempler og øvelser fra lektion 2 om python datastrukture
