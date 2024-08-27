@@ -26,6 +26,6 @@ Eller:
 Projektets MASTER branch skal du ikke redigere i.    
 Opret istedet en ny branch for hver undervisningsgang (e.g. lek1, lek2.).
 
-MASTER branch = Kode fra Claus
-All andre branches = er jeres, og i kan skrive hvad i vil i dem. 
+MASTER branch = Kode fra Claus    
+Alle andre branches = Jeres egne, og i kan skrive hvad i vil i dem. 
 
