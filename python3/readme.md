@@ -1,0 +1,1 @@
+## Kodeeksempler og øvelser fra lektion 3 om python moduler og pakker
