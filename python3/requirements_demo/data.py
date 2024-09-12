@@ -15,3 +15,9 @@ persons = {
         "city": "Chicago"
     }
 }
+
+def avg_age():
+    sum = 0
+    for i in persons.keys():
+        sum += persons[i]['age']
+    return sum / len(persons)
