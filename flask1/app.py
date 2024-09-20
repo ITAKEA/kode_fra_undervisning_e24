@@ -1,5 +1,7 @@
 from flask import Flask, jsonify, request
 from data_dict_simple import simple
+from students import read
+from data_dict import random_users
 
 app = Flask(__name__)
 
@@ -7,12 +9,12 @@ app = Flask(__name__)
 
 @app.route('/students')
 def read_all():
-    return jsonify(simple)
+    return jsonify(random_users)
 
 @app.route('/students', methods=['POST'])
 def create():
     data = request.get_json()
     simple.append(data)
-    return jsonify(simple)
+    return jsonify()
 
 app.run(debug=True)
