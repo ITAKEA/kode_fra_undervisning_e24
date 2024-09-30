@@ -1,0 +1,4 @@
+.clbo
+.env
+*.db
+*.sqlite
