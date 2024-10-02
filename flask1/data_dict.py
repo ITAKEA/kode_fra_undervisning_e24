@@ -23,6 +23,8 @@ def create_random_user():
 # List comprehension der genererer en liste med 10 random_user dictionaries
 random_users = [create_random_user() for _ in range(10)]
 
+print(random_users)
+
 
 # random_users kan alternativt laves med et for loop
 """
