@@ -1,14 +1,16 @@
 from flask import Flask, jsonify, request
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
-from dotenv import load_dotenv # import fra .env fil
+from flask_jwt_extended import JWTManager, create_access_token, set_access_cookies, unset_jwt_cookies, jwt_required, get_jwt_identity
+from dotenv import load_dotenv
 import os
+from datetime import timedelta
 
-# Load environment variables
 load_dotenv()
 
 app = Flask(__name__)
 
 app.config['JWT_SECRET_KEY'] = os.getenv('KEY')
+app.config['JWT_TOKEN_LOCATION'] = ['cookies']
+
 jwt = JWTManager(app)
 
 # database
@@ -31,12 +33,18 @@ def login():
     if not user or user['password'] != password:
         return jsonify({'msg': 'Incorrect email or password'}), 401
 
-    # Opret token
-    token = create_access_token(identity=email)
+    # Create access token
+    access_token = create_access_token(identity=email)
 
-    return jsonify({
-        'access_token': token,
-    }), 200
+    response = jsonify({
+        'msg': 'Login OK',
+        'user': email
+    })
+    
+    # cookie
+    set_access_cookies(response, access_token)
+    
+    return response, 200
 
 @app.route('/protected', methods=['GET'])
 @jwt_required()
@@ -44,8 +52,14 @@ def protected():
     current_user = get_jwt_identity()
     return jsonify({
         'logged_in_as': current_user,
-        'msg': 'Du har adgang til denne resourse'
+        'msg': 'You have access to this resource'
     }), 200
+
+@app.route('/logout', methods=['POST'])
+def logout():
+    response = jsonify({'msg': 'Successfully logged out'})
+    unset_jwt_cookies(response)
+    return response, 200
 
 if __name__ == '__main__':
     app.run(debug=True)
