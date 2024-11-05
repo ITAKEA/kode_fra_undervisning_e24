@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from dotenv import load_dotenv # import fra .env fil
 import os
+import requests
 
 # Load environment variables
 load_dotenv()
@@ -46,6 +47,20 @@ def protected():
         'logged_in_as': current_user,
         'msg': 'Du har adgang til denne resourse'
     }), 200
+
+@app.route('/account/info', methods=['GET'])
+@jwt_required()
+def get_account_info():
+    # Get the JWT token from the current request
+    token = request.headers.get('Authorization')
+    
+    # Forward the request to the account service
+    response = requests.get(
+        'http://localhost:5001/account/balance',
+        headers={'Authorization': token}
+    )
+    
+    return jsonify(response.json()), response.status_code
 
 if __name__ == '__main__':
     app.run(debug=True)

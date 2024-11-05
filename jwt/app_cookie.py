@@ -10,6 +10,7 @@ app = Flask(__name__)
 
 app.config['JWT_SECRET_KEY'] = os.getenv('KEY')
 app.config['JWT_TOKEN_LOCATION'] = ['cookies']
+app.config['JWT_COOKIE_SAMESITE'] = 'Lax' 
 
 jwt = JWTManager(app)
 
