@@ -8,11 +8,9 @@ load_dotenv()
 
 app = Flask(__name__)
 
-# Configure JWT
 app.config['JWT_SECRET_KEY'] = os.getenv('KEY')
 jwt = JWTManager(app)
 
-# Mock account data
 accounts = {
     'test@test.com': {
         'balance': 1000,
