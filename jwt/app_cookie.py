@@ -34,7 +34,6 @@ def login():
     if not user or user['password'] != password:
         return jsonify({'msg': 'Incorrect email or password'}), 401
 
-    # Create access token
     access_token = create_access_token(identity=email)
 
     response = jsonify({
@@ -55,6 +54,16 @@ def protected():
         'logged_in_as': current_user,
         'msg': 'You have access to this resource'
     }), 200
+
+@app.route('/protected2', methods=['GET'])
+@jwt_required()
+def protected2():
+    #current_user = get_jwt_identity()
+    return jsonify({
+        #'logged_in_as': current_user,
+        'msg': 'You have access to this resource'
+    }), 200
+
 
 @app.route('/logout', methods=['POST'])
 def logout():

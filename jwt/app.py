@@ -3,6 +3,7 @@ from flask_jwt_extended import JWTManager, create_access_token, jwt_required, ge
 from dotenv import load_dotenv # import fra .env fil
 import os
 import requests
+import datetime
 
 # Load environment variables
 load_dotenv()
@@ -10,6 +11,9 @@ load_dotenv()
 app = Flask(__name__)
 
 app.config['JWT_SECRET_KEY'] = os.getenv('KEY')
+app.config['JWT_HEADER_TYPE'] = 'token'
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = False
+
 jwt = JWTManager(app)
 
 # database
@@ -40,7 +44,7 @@ def login():
     }), 200
 
 @app.route('/protected', methods=['GET'])
-@jwt_required()
+@jwt_required() # alle protecd route
 def protected():
     current_user = get_jwt_identity()
     return jsonify({

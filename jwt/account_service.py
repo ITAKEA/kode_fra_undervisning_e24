@@ -9,6 +9,7 @@ load_dotenv()
 app = Flask(__name__)
 
 app.config['JWT_SECRET_KEY'] = os.getenv('KEY')
+app.config['JWT_HEADER_TYPE'] = 'token'
 jwt = JWTManager(app)
 
 accounts = {
